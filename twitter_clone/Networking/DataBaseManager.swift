@@ -37,6 +37,8 @@ class DataBaseManager {
         .eraseToAnyPublisher()
     }
     
+
+    
     func collectionUsers(retrieve id: String) -> AnyPublisher<TwitterUserModel, Error> {
           return Future<TwitterUserModel, Error> { promise in
               let docRef = self.db.collection(self.usersPath).document(id)
@@ -58,7 +60,81 @@ class DataBaseManager {
           }
           .eraseToAnyPublisher()
       }
+    func collectionUsers() -> AnyPublisher<[TwitterUserModel], Error> {
+        return Future<[TwitterUserModel], Error> { promise in
+            let collectionRef = self.db.collection(self.usersPath)
+            collectionRef.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    do {
+                        let twitterUsers = try querySnapshot?.documents.compactMap {
+                            try $0.data(as: TwitterUserModel.self)
+                        } ?? []
+                        promise(.success(twitterUsers))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
     
+    func searchUserDatawithUsername(_ prefix: String) -> AnyPublisher<[TwitterUserModel], Error> {
+        return Future<[TwitterUserModel], Error> { promise in
+            let collectionRef = self.db.collection(self.usersPath)
+                collectionRef.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    do {
+                        let twitterUsers = try querySnapshot?.documents.compactMap {
+                            try $0.data(as: TwitterUserModel.self)
+                        }.filter { user in
+                            return user?.username.lowercased().hasPrefix(prefix.lowercased()) ?? false
+                        } ?? []
+                        promise(.success(twitterUsers))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    func searchUserDatawithDisplayname(_ prefix: String) -> AnyPublisher<[TwitterUserModel], Error> {
+        return Future<[TwitterUserModel], Error> { promise in
+            let collectionRef = self.db.collection(self.usersPath)
+                collectionRef.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    do {
+                        let twitterUsers = try querySnapshot?.documents.compactMap {
+                            try $0.data(as: TwitterUserModel.self)
+                        }.filter { user in
+                            return user?.displayName.lowercased().hasPrefix(prefix.lowercased()) ?? false
+                        } ?? []
+                        promise(.success(twitterUsers))
+                    } catch {
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    
+    
+    
+    
+    
+    
+    
+
     func collectionUsers(updateFields: [String: Any], for id: String) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { promise in
             self.db.collection(self.usersPath).document(id).updateData(updateFields) { error in

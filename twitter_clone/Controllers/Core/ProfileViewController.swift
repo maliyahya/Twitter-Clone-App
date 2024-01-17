@@ -30,7 +30,6 @@ class ProfileViewController: UIViewController {
         profileTableView.tableHeaderView=headerView
         configureConstraints()
         bindViews()
-
     }
     private func bindViews(){
         viewModel.$user.sink { [weak self] user in
@@ -65,9 +64,6 @@ class ProfileViewController: UIViewController {
             profileTableView.trailingAnchor.constraint(equalTo:view.trailingAnchor),
             profileTableView.leadingAnchor.constraint(equalTo:view.leadingAnchor),
             profileTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor),
-            
-            
-            
         ]
         )
     }

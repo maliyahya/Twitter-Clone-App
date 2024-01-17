@@ -13,6 +13,7 @@ protocol TweetTableViewCellDelegate:AnyObject{
     func tweetTableViewCellDidTapLike()
     func tweetTableViewCellDidTapShare()
 }
+
 class TweetTableViewCell: UITableViewCell {
     static let identifier="TweetTableViewCell"
     weak var delegate:TweetTableViewCellDelegate?

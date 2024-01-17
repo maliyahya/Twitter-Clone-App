@@ -11,14 +11,14 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         createTabBar()
+        view.backgroundColor = .systemBackground
     }
     func createTabBar(){
         let vc1=UINavigationController(rootViewController: HomeViewController())
-        let vc2=UINavigationController(rootViewController: NotificationViewController())
-        let vc3=UINavigationController(rootViewController: DirectMessagesViewController())
-        let vc4=UINavigationController(rootViewController: SearchViewController())
+        let vc2=UINavigationController(rootViewController: SearchViewController())
+        let vc3=UINavigationController(rootViewController: NotificationViewController())
+        let vc4=UINavigationController(rootViewController: DirectMessagesViewController())
         vc1.tabBarItem.image=UIImage(systemName: "house")
         vc1.tabBarItem.selectedImage=UIImage(systemName: "house.fill")
         vc2.tabBarItem.image=UIImage(systemName: "magnifyingglass")

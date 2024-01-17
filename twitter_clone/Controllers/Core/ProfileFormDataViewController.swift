@@ -197,8 +197,6 @@ class ProfileFormDataViewController: UIViewController {
     }
     
 
-   
-
 }
 
 extension ProfileFormDataViewController:UITextViewDelegate,UITextFieldDelegate{
@@ -213,7 +211,6 @@ extension ProfileFormDataViewController:UITextViewDelegate,UITextFieldDelegate{
     func textViewDidChange(_ textView: UITextView) {
         viewModel.bio=bioTextView.text
         viewModel.validateUserProfileForm()
-
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)

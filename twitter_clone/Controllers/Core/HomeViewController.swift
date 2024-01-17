@@ -92,7 +92,6 @@ class HomeViewController: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc,animated: false)
         }
-        
     }
     private func completeUserOnBoarding(){
         let vc = ProfileFormDataViewController()
@@ -118,7 +117,6 @@ class HomeViewController: UIViewController {
         
     }
 }
-
 extension HomeViewController:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.tweets.count

@@ -30,6 +30,21 @@ final class ProfileViewViewModel:ObservableObject{
         }
         .store(in: &subscriptions)
     }
+    func retrieveUser(id:String){
+        DataBaseManager.shared.collectionUsers(retrieve: id).handleEvents(receiveOutput: { [weak self ] user in
+            self?.user = user
+            self?.fetchTweets()
+        })
+            .sink {[weak self] completion in
+            if case .failure(let error) = completion{
+                self?.error=error.localizedDescription
+            }
+        } receiveValue: { [weak self] user in
+            self?.user=user
+            print(user)
+        }
+        .store(in: &subscriptions)
+    }
     func getFormattedData(with date: Date)->String{
         let dataFormatter = DateFormatter()
         dataFormatter.dateFormat = "MMM YYYY"
@@ -45,6 +60,7 @@ final class ProfileViewViewModel:ObservableObject{
             }
         } receiveValue: { [weak self] retreivedTweets in
             self?.tweets=retreivedTweets
+            
         }
         .store(in: &subscriptions)
 

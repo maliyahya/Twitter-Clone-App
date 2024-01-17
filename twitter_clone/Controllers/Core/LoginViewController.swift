@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
         label.font = .systemFont(ofSize: 30,weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints=false
         label.numberOfLines=1
+        label.textColor = .label
         return label
     }()
     private let emailTextField:UITextField={
